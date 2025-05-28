@@ -1,4 +1,4 @@
-# HSCA_S24
+# HSCA_F25
 High-Speed Computer Arithmetic Fall 2025
 Oklahoma State University
 
