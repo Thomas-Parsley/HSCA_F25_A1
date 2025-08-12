@@ -4,7 +4,6 @@ This file has sample SystemVerilog files that can help you learn how to simulate
 
 <ol>
   <li>silly: simple Silly example found in DDCA</li>
-  <li>fulladder: simple fulladder example somewhat found in DDCA that documents how to read in testvectors.</li>
   <li>fsm_example: simple Mealy FSM design similar to what is found in DDCA.</li>
   <li>pipe_riscv: design found in DDCA for pipelined RISC-V but also has testbench set up for ModelSim as well as feature to see instructions in waveform (used in ECEN 4243).</li>
   <li>sample: sample adder design that showcases how to test vectors in the testbench and output the results to a file.</li>
