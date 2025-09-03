@@ -4,9 +4,8 @@ module testbench();
    logic reset;
    logic [63:0] a, b;
    logic [127:0] TCout, USout, TCexp, USexp;
-   logic 	sum_expected, cout_expected;
    logic [31:0] vectornum, errors;
-   logic [47:0] testvectors[10000:0];
+   logic [383:0] testvectors[10000:0];
    
    integer 	handle3;
    
@@ -24,7 +23,7 @@ module testbench();
    initial
      begin
 	handle3 = $fopen("multiplication.out");	
-	$readmemb("multiplication.tv", testvectors);
+	$readmemh("multiplication.tv", testvectors);
 	vectornum = 0; errors = 0;
 	reset = 1; #22; reset = 0;
      end
@@ -32,13 +31,13 @@ module testbench();
    // apply test vectors on rising edge of clk
    always @(posedge clk)
      begin
-	#1; {a[63:0], b[63:0], TCexp[127:0], USexp[127:0]} = testvectors[vectornum];
+	#1; {a, b, TCexp, USexp} = testvectors[vectornum];
      end
    
    // check results on falling edge of clk
    always @(negedge clk)
      if (~reset) begin // skip during reset
-	$fdisplay(handle3, "%b %b || TCresult: %b | TCexpected: %b || USresult: %b | USexpected: %b ||", 
+	$fdisplay(handle3, "%h %h || TCresult: %h | TCexpected: %h || USresult: %h | USexpected: %h ||", 
 		  a, b, TCout, TCexp, USout, USexp);/**/
 	
 	/*if (USout != USexp) begin  // check result
@@ -52,7 +51,7 @@ module testbench();
            errors = errors + 1;
 	end*/
 	vectornum = vectornum + 1;
-	if (vectornum === 8'b11111111) begin 
+	if (vectornum === 32'b0000000000000000000000001000) begin 
            $display("%d tests completed with %d errors", 
 	            vectornum, errors);
            $stop;

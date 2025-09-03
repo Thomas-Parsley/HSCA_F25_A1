@@ -1,6 +1,6 @@
 # do multiplication.do
 # Model Technology ModelSim SE-64 vlog 2021.3 Compiler 2021.07 Jul 13 2021
-# Start time: 17:01:28 on Sep 02,2025
+# Start time: 21:38:54 on Sep 02,2025
 # vlog multiplication.sv 
 # -- Compiling module testbench
 # -- Compiling module TCmultiplier
@@ -8,10 +8,10 @@
 # 
 # Top level modules:
 # 	testbench
-# End time: 17:01:28 on Sep 02,2025, Elapsed time: 0:00:00
+# End time: 21:38:54 on Sep 02,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim SE-64 vopt 2021.3 Compiler 2021.07 Jul 13 2021
-# Start time: 17:01:28 on Sep 02,2025
+# Start time: 21:38:54 on Sep 02,2025
 # vopt "+acc" work.testbench -o workopt 
 # 
 # Top level modules:
@@ -21,12 +21,14 @@
 # -- Loading module testbench
 # -- Loading module TCmultiplier
 # -- Loading module USmultiplier
-# Incremental compilation check found no design-units have changed.
+# Incremental compilation check found 2 design-units (out of 3) may be reused.
+# Optimizing 1 design-unit (inlining 0/3 module instances):
+# -- Optimizing module testbench(fast)
 # Optimized design name is workopt
-# End time: 17:01:28 on Sep 02,2025, Elapsed time: 0:00:00
+# End time: 21:38:55 on Sep 02,2025, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # vsim workopt 
-# Start time: 17:01:29 on Sep 02,2025
+# Start time: 21:38:55 on Sep 02,2025
 # //  ModelSim SE-64 2021.3 Jul 13 2021
 # //
 # //  Copyright 1991-2021 Mentor Graphics Corporation
@@ -44,13 +46,8 @@
 # Loading work.testbench(fast)
 # Loading work.TCmultiplier(fast)
 # Loading work.USmultiplier(fast)
-# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
-#           File in use by: tpars  Hostname: DELLTP  ProcessID: 34892
-#           Attempting to use alternate WLF file "./wlftexk6nk".
-# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
-#           Using alternate file: ./wlftexk6nk
-#        255 tests completed with          0 errors
-# ** Note: $stop    : multiplication.sv(58)
-#    Time: 2565 ns  Iteration: 1  Instance: /testbench
-# Break in Module testbench at multiplication.sv line 58
-# Stopped at multiplication.sv line 58
+#          8 tests completed with          0 errors
+# ** Note: $stop    : multiplication.sv(57)
+#    Time: 95 ns  Iteration: 1  Instance: /testbench
+# Break in Module testbench at multiplication.sv line 57
+# Stopped at multiplication.sv line 57
