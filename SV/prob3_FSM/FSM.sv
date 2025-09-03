@@ -1,28 +1,31 @@
 module testbench();
+
    
    logic clk;
    logic reset;
-   logic [3:0] inHex;
-   logic [6:0] outBits;
+   logic FSMreset;
+   logic [1:0] FSMstate;
+   logic a, b, y;
    logic [31:0] vectornum, errors;
-   logic [3:0] testvectors[10000:0];
+   logic [2:0] testvectors[10000:0];
    
    integer 	handle3;
    
    // instantiate device under test
-   hexToSevenSegment dut1(inHex, outBits);
+   FSM dut1(a, b, clk, FSMreset, y, FSMstate);
    
    // generate clock
    always 
      begin
-	clk = 1; #5; clk = 0; #5;
+	clk = 1'b1;
+	forever #5 clk = ~clk;
      end
    
    // at start of test, load vectors and pulse reset
    initial
      begin
-	handle3 = $fopen("seven_segment_display.out");	
-	$readmemh("seven_segment_display.tv", testvectors);
+	handle3 = $fopen("FSM.out");	
+	$readmemb("FSM.tv", testvectors);
 	vectornum = 0; errors = 0;
 	reset = 1; #22; reset = 0;
      end
@@ -30,28 +33,17 @@ module testbench();
    // apply test vectors on rising edge of clk
    always @(posedge clk)
      begin
-	#1; {inHex} = testvectors[vectornum];
+	#1; {a, b, FSMreset} = testvectors[vectornum];
      end
    
    // check results on falling edge of clk
    always @(negedge clk)
      if (~reset) begin // skip during reset
-	$fdisplay(handle3,"%s\n%s%s%s\n%s%s%s\n",
-          (outBits[6] == 1'b1) ? "___" : "   ",
-          (outBits[1] == 1'b1) ? "|" : " ",
-          (outBits[0] == 1'b1) ? "_" : " ",
-          (outBits[5] == 1'b1) ? "|" : " ",
-          (outBits[2] == 1'b1) ? "|" : " ",
-          (outBits[3] == 1'b1) ? "_" : " ",
-          (outBits[4] == 1'b1) ? "|" : " "
-          );/*
-            ___
-            |_|
-            |_|
-            */
+	$fdisplay(handle3,"a b r | y s\n%b %b %b | %b %h\n",
+          a, b, FSMreset, y, FSMstate);
 
 	vectornum = vectornum + 1;
-	if (vectornum === 5'b10000) begin 
+	if (vectornum === 4'b1010) begin 
            $display("%d tests completed with %d errors", 
 	            vectornum, errors);
            $stop;
@@ -59,40 +51,45 @@ module testbench();
      end
 endmodule
 
-module hexToSevenSegment(input logic [3:0] inHex, output logic [6:0] outBits);
-     always_comb
-          case(inHex)
-          4'h0: outBits = 7'b1111110;
-          4'h1: outBits = 7'b0110000;
-          4'h2: outBits = 7'b1101101;
-          4'h3: outBits = 7'b1111001;
-          4'h4: outBits = 7'b0110011;
-          4'h5: outBits = 7'b1011011;
-          4'h6: outBits = 7'b1011111;
-          4'h7: outBits = 7'b1110000;
-          4'h8: outBits = 7'b1111111;
-          4'h9: outBits = 7'b1111011;
-          4'hA: outBits = 7'b1110111;
-          4'hB: outBits = 7'b0011111;
-          4'hC: outBits = 7'b1001110;
-          4'hD: outBits = 7'b0111101;
-          4'hE: outBits = 7'b1001111;
-          4'hF: outBits = 7'b1000111;
-          default: outBits = 7'b1111110;
-          endcase
+module FSM (input logic a, b, clk, reset, output logic y, output logic [1:0] FSMstate);
+
+   typedef enum logic [1:0] {S0, S1, S2} statetype;
+   statetype state, nextState;
+   
+   // State Register
+   always_ff @ (posedge clk, negedge reset) 
+     begin
+	if (~reset)
+	  state <= S0;
+	else
+	  state <= nextState;
+     end   
+
+   // Next State Logic
+   always_comb 
+     begin
+	case (state)
+	  S0: begin
+	     nextState = a ? S1 : S0;	     
+	     y = 1'b0;
+          FSMstate = a ? 2'b01 : 2'b00;
+	  end
+	  S1: begin
+	     nextState = b ? S2 : S0;
+	     y = 1'b0;	    
+          FSMstate = b ? 2'b10 : 2'b00; 
+	  end
+	  S2: begin
+	     nextState = (a & b) ? S2 : S0;
+	     y = (a & b) ? 1'b1 : 1'b0;
+          FSMstate = (a & b) ? 2'b10 : 2'b00; 
+	  end
+	  default: begin
+	     nextState = S0;
+	     y = 1'b0;
+          FSMstate = 2'b00;
+	  end
+	endcase
+     end
+  
 endmodule
-/*
-_a_
-f b
->g<
-e c
- d
-
-___
-|_|
-|_|
-
-
-
-*/
-

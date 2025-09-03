@@ -2,7 +2,7 @@
 # 
 
 # compile, optimize, and start the simulation
-vlog seven_segment_display.sv 
+vlog FSM.sv 
 vopt +acc work.testbench -o workopt 
 vsim workopt
 

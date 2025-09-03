@@ -1,17 +1,21 @@
 // abc_cout s
-0
-1
-2
-3
-4
-5
-6
-7
-8
-9
-A
-B
-C
-D
-E
-F
+//Stay at S0
+0_0_0
+//Go to S1
+1_0_0
+//Return to S0
+0_0_0
+//Go to S1
+1_0_0
+//Go to S2
+0_1_0
+//Stay at S2
+1_1_0
+//Go to S0
+0_0_0
+//Go to S1
+1_0_0
+//Go to S2
+0_1_0
+//Reset
+1_1_1
