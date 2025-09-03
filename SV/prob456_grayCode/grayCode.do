@@ -2,7 +2,7 @@
 # 
 
 # compile, optimize, and start the simulation
-vlog FSM.sv 
+vlog grayCode.sv 
 vopt +acc work.testbench -o workopt 
 vsim workopt
 

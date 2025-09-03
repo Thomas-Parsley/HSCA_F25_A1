@@ -6,7 +6,7 @@ module testbench();
    logic FSMreset;
    logic [1:0] FSMstate;
    logic a, b, y;
-   logic [31:0] vectornum, errors;
+   logic [8:0] vectornum, errors;
    logic [2:0] testvectors[10000:0];
    
    integer 	handle3;
@@ -33,7 +33,7 @@ module testbench();
    // apply test vectors on rising edge of clk
    always @(posedge clk)
      begin
-	#1; {a, b, FSMreset} = testvectors[vectornum];
+	#0; {a, b, FSMreset} = testvectors[vectornum];
      end
    
    // check results on falling edge of clk
@@ -53,13 +53,13 @@ endmodule
 
 module FSM (input logic a, b, clk, reset, output logic y, output logic [1:0] FSMstate);
 
-   typedef enum logic [1:0] {S0, S1, S2} statetype;
+   typedef enum logic [1:0] {S0, S1, S2, S3} statetype;
    statetype state, nextState;
    
    // State Register
    always_ff @ (posedge clk, negedge reset) 
      begin
-	if (~reset)
+	if (reset)
 	  state <= S0;
 	else
 	  state <= nextState;
@@ -72,22 +72,22 @@ module FSM (input logic a, b, clk, reset, output logic y, output logic [1:0] FSM
 	  S0: begin
 	     nextState = a ? S1 : S0;	     
 	     y = 1'b0;
-          FSMstate = a ? 2'b01 : 2'b00;
+       FSMstate = a ? 2'b01 : 2'b00;
 	  end
 	  S1: begin
 	     nextState = b ? S2 : S0;
 	     y = 1'b0;	    
-          FSMstate = b ? 2'b10 : 2'b00; 
+       FSMstate = b ? 2'b10 : 2'b00; 
 	  end
 	  S2: begin
 	     nextState = (a & b) ? S2 : S0;
 	     y = (a & b) ? 1'b1 : 1'b0;
-          FSMstate = (a & b) ? 2'b10 : 2'b00; 
+       FSMstate = (a & b) ? 2'b10 : 2'b00; 
 	  end
 	  default: begin
 	     nextState = S0;
 	     y = 1'b0;
-          FSMstate = 2'b00;
+       FSMstate = 2'b00;
 	  end
 	endcase
      end

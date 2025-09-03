@@ -11,19 +11,19 @@
 # //  is prohibited from disclosure under the Trade Secrets Act,
 # //  18 U.S.C. Section 1905.
 # //
-# do FSM.do
+# do grayCode.do
 # Model Technology ModelSim SE-64 vlog 2021.3 Compiler 2021.07 Jul 13 2021
-# Start time: 12:55:19 on Sep 03,2025
-# vlog -reportprogress 300 FSM.sv 
+# Start time: 13:16:46 on Sep 03,2025
+# vlog -reportprogress 300 grayCode.sv 
 # -- Compiling module testbench
-# -- Compiling module FSM
+# -- Compiling module grayCode
 # 
 # Top level modules:
 # 	testbench
-# End time: 12:55:19 on Sep 03,2025, Elapsed time: 0:00:00
+# End time: 13:16:46 on Sep 03,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim SE-64 vopt 2021.3 Compiler 2021.07 Jul 13 2021
-# Start time: 12:55:20 on Sep 03,2025
+# Start time: 13:16:46 on Sep 03,2025
 # vopt -reportprogress 300 "+acc" work.testbench -o workopt 
 # 
 # Top level modules:
@@ -31,24 +31,21 @@
 # 
 # Analyzing design...
 # -- Loading module testbench
-# -- Loading module FSM
+# -- Loading module grayCode
 # Incremental compilation check found 1 design-unit (out of 2) may be reused.
 # Optimizing 1 design-unit (inlining 0/2 module instances):
-# -- Optimizing module FSM(fast)
-# ** Note: (vopt-143) Recognized 1 FSM in module "FSM(fast)".
+# -- Optimizing module grayCode(fast)
+# ** Note: (vopt-143) Recognized 1 FSM in module "grayCode(fast)".
 # Optimized design name is workopt
-# End time: 12:55:21 on Sep 03,2025, Elapsed time: 0:00:01
+# End time: 13:16:47 on Sep 03,2025, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # vsim workopt 
-# Start time: 12:55:21 on Sep 03,2025
+# Start time: 13:16:47 on Sep 03,2025
 # Loading sv_std.std
 # Loading work.testbench(fast)
-# Loading work.FSM(fast)
-#  10 tests completed with   0 errors
-# ** Note: $stop    : FSM.sv(49)
+# Loading work.grayCode(fast)
+#         10 tests completed with          0 errors
+# ** Note: $stop    : grayCode.sv(49)
 #    Time: 115 ns  Iteration: 1  Instance: /testbench
-# Break in Module testbench at FSM.sv line 49
+# Break in Module testbench at grayCode.sv line 49
 # .main_pane.wave.interior.cs.body.pw.wf
-# Break key hit
-# End time: 13:02:08 on Sep 03,2025, Elapsed time: 0:06:47
-# Errors: 0, Warnings: 0
