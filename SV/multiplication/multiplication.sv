@@ -2,8 +2,8 @@ module testbench();
    
    logic clk;
    logic reset;
-   logic [7:0] a, b;
-   logic [15:0] TCout, USout, TCexp, USexp;
+   logic [63:0] a, b;
+   logic [127:0] TCout, USout, TCexp, USexp;
    logic 	sum_expected, cout_expected;
    logic [31:0] vectornum, errors;
    logic [47:0] testvectors[10000:0];
@@ -32,7 +32,7 @@ module testbench();
    // apply test vectors on rising edge of clk
    always @(posedge clk)
      begin
-	#1; {a[7:0], b[7:0], TCexp[15:0], USexp[15:0]} = testvectors[vectornum];
+	#1; {a[63:0], b[63:0], TCexp[127:0], USexp[127:0]} = testvectors[vectornum];
      end
    
    // check results on falling edge of clk
@@ -60,12 +60,12 @@ module testbench();
      end
 endmodule
 
-module TCmultiplier(input logic signed [7:0] a, b,
-                 output logic signed [15:0] c);
+module TCmultiplier(input logic signed [63:0] a, b,
+                 output logic signed [127:0] c);
   assign c = a * b; 
 endmodule
 
-module USmultiplier(input logic [7:0] a, b,
-                 output logic [15:0] c);
+module USmultiplier(input logic [63:0] a, b,
+                 output logic [127:0] c);
   assign c = a * b;
 endmodule
