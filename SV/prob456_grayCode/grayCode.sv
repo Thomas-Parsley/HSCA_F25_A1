@@ -6,7 +6,7 @@ module testbench();
    logic FSMreset;
    logic [2:0] value, y;
    logic direction, load;
-   logic [31:0] vectornum, errors;
+   logic [8:0] vectornum, errors;
    logic [5:0] testvectors[10000:0];
    
    integer 	handle3;
@@ -43,7 +43,7 @@ module testbench();
           load, value, FSMreset, direction, y);
 
 	vectornum = vectornum + 1;
-	if (vectornum === 4'b1010) begin 
+	if (vectornum === 5'b11000) begin 
            $display("%d tests completed with %d errors", 
 	            vectornum, errors);
            $stop;
@@ -53,7 +53,7 @@ endmodule
 
 module grayCode (input logic load, direction, clk, reset, input logic [2:0] value, output logic [2:0] y);
 
-  logic [2:0] between;
+  logic [2:0] nextY;
 
    typedef enum logic [1:0] {S0, S1, S2} statetype;
    statetype state, nextState;
@@ -61,10 +61,14 @@ module grayCode (input logic load, direction, clk, reset, input logic [2:0] valu
    // State Register
    always_ff @ (posedge clk, negedge reset) 
      begin
-      if (reset) 
+      if (~reset) begin
         state <= S0;
-      else 
+        y <= 3'b000;
+      end
+      else begin
         state <= nextState;
+        y <= nextY;
+      end
      end   
 
    // Next State Logic
@@ -73,21 +77,19 @@ module grayCode (input logic load, direction, clk, reset, input logic [2:0] valu
 	case (state)
 	  S0: begin
 	     nextState = S1;
-	     y = (load) ? value : 3'b000;
+	     nextY = (load) ? value : 3'b000;
 	  end
 	  S1: begin
 	     nextState = direction ? S1 : S2;
-       between = y + 3'b001;
-	     y = (load) ? value : ((y > 3'b100) ? 3'b000 : between);
+	     nextY = (load) ? value : ((y >= 3'b100) ? 3'b000 : y + 3'b001);
 	  end
 	  S2: begin
 	     nextState = direction ? S1 : S2;
-	     between = y - 3'b001;
-	     y = (load) ? value : ((y < 3'b000) ? 3'b100 : between); 
+	     nextY = (load) ? value : ((y <= 3'b000) ? 3'b100 : y - 3'b001); 
 	  end
 	  default: begin
 	     nextState = S0;
-	     y = (load) ? value : 3'b000;
+	     nextY = (load) ? value : 3'b000;
 	  end
 	endcase
      end
