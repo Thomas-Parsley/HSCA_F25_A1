@@ -1,4 +1,4 @@
-# multiplication.do 
+# FSM.do 
 # 
 
 # compile, optimize, and start the simulation

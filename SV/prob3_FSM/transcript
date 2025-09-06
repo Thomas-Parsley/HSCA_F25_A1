@@ -13,17 +13,17 @@
 # //
 # do FSM.do
 # Model Technology ModelSim SE-64 vlog 2021.3 Compiler 2021.07 Jul 13 2021
-# Start time: 12:55:19 on Sep 03,2025
+# Start time: 20:35:35 on Sep 05,2025
 # vlog -reportprogress 300 FSM.sv 
 # -- Compiling module testbench
 # -- Compiling module FSM
 # 
 # Top level modules:
 # 	testbench
-# End time: 12:55:19 on Sep 03,2025, Elapsed time: 0:00:00
+# End time: 20:35:35 on Sep 05,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim SE-64 vopt 2021.3 Compiler 2021.07 Jul 13 2021
-# Start time: 12:55:20 on Sep 03,2025
+# Start time: 20:35:36 on Sep 05,2025
 # vopt -reportprogress 300 "+acc" work.testbench -o workopt 
 # 
 # Top level modules:
@@ -32,15 +32,16 @@
 # Analyzing design...
 # -- Loading module testbench
 # -- Loading module FSM
-# Incremental compilation check found 1 design-unit (out of 2) may be reused.
-# Optimizing 1 design-unit (inlining 0/2 module instances):
+# Incremental compilation check found no design-units (out of 2) may be reused.
+# Optimizing 2 design-units (inlining 0/2 module instances):
+# -- Optimizing module testbench(fast)
 # -- Optimizing module FSM(fast)
 # ** Note: (vopt-143) Recognized 1 FSM in module "FSM(fast)".
 # Optimized design name is workopt
-# End time: 12:55:21 on Sep 03,2025, Elapsed time: 0:00:01
+# End time: 20:35:37 on Sep 05,2025, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # vsim workopt 
-# Start time: 12:55:21 on Sep 03,2025
+# Start time: 20:35:37 on Sep 05,2025
 # Loading sv_std.std
 # Loading work.testbench(fast)
 # Loading work.FSM(fast)
@@ -49,6 +50,5 @@
 #    Time: 115 ns  Iteration: 1  Instance: /testbench
 # Break in Module testbench at FSM.sv line 49
 # .main_pane.wave.interior.cs.body.pw.wf
-# Break key hit
-# End time: 13:02:08 on Sep 03,2025, Elapsed time: 0:06:47
+# End time: 20:37:45 on Sep 05,2025, Elapsed time: 0:02:08
 # Errors: 0, Warnings: 0

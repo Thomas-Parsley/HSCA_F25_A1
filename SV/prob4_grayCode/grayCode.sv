@@ -4,15 +4,14 @@ module testbench();
    logic clk;
    logic reset;
    logic FSMreset;
-   logic [2:0] value, y;
-   logic direction, load;
+   logic [2:0] y;
    logic [8:0] vectornum, errors;
    logic [5:0] testvectors[10000:0];
    
    integer 	handle3;
    
    // instantiate device under test
-   grayCode dut1(load, direction, clk, FSMreset, value, y);
+   grayCode dut1(clk, FSMreset, y);
    
    // generate clock
    always 
@@ -33,17 +32,17 @@ module testbench();
    // apply test vectors on rising edge of clk
    always @(posedge clk)
      begin
-	#1; {load, direction, FSMreset, value} = testvectors[vectornum];
+	#1; {FSMreset} = testvectors[vectornum];
      end
    
    // check results on falling edge of clk
    always @(negedge clk)
      if (~reset) begin // skip during reset
-	$fdisplay(handle3,"load value reset direct | y\n%b    %h     %b     %b      | %h\n",
-          load, value, FSMreset, direction, y);
+	$fdisplay(handle3,"reset | y\n%b     | %h\n",
+          FSMreset, y);
 
 	vectornum = vectornum + 1;
-	if (vectornum === 5'b11000) begin 
+	if (testvectors[vectornum] === 6'bx) begin 
            $display("%d tests completed with %d errors", 
 	            vectornum, errors);
            $stop;
@@ -51,11 +50,11 @@ module testbench();
      end
 endmodule
 
-module grayCode (input logic load, direction, clk, reset, input logic [2:0] value, output logic [2:0] y);
+module grayCode (input logic clk, reset, output logic [2:0] y);
 
   logic [2:0] nextY;
 
-   typedef enum logic [1:0] {S0, S1, S2} statetype;
+   typedef enum logic [1:0] {S0, S1} statetype;
    statetype state, nextState;
    
    // State Register
@@ -77,19 +76,15 @@ module grayCode (input logic load, direction, clk, reset, input logic [2:0] valu
 	case (state)
 	  S0: begin
 	     nextState = S1;
-	     nextY = (load) ? value : 3'b000;
+	     nextY = 3'b000;
 	  end
 	  S1: begin
-	     nextState = direction ? S1 : S2;
-	     nextY = (load) ? value : ((y >= 3'b100) ? 3'b000 : y + 3'b001);
-	  end
-	  S2: begin
-	     nextState = direction ? S1 : S2;
-	     nextY = (load) ? value : ((y <= 3'b000) ? 3'b100 : y - 3'b001); 
+	     nextState = S1;
+	     nextY = (y >= 3'b100) ? 3'b000 : y + 3'b001;
 	  end
 	  default: begin
 	     nextState = S0;
-	     nextY = (load) ? value : 3'b000;
+	     nextY = 3'b000;
 	  end
 	endcase
      end

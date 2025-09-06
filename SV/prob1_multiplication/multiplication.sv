@@ -40,7 +40,7 @@ module testbench();
 	$fdisplay(handle3, "%h %h || TCresult: %h | TCexpected: %h || USresult: %h | USexpected: %h ||", 
 		  a, b, TCout, TCexp, USout, USexp);/**/
 	
-	/*if (USout != USexp) begin  // check result
+	if (USout != USexp) begin  // check result
            $display("Error: inputs = %b", {a, b});
            $display("  outputs = %b (%b expected)",USout, USexp);
            errors = errors + 1;
@@ -49,9 +49,9 @@ module testbench();
            $display("Error: inputs = %b", {a, b});
            $display("  outputs = %b (%b expected)",TCout, TCexp);
            errors = errors + 1;
-	end*/
+	end/**/
 	vectornum = vectornum + 1;
-	if (vectornum === 32'b0000000000000000000000001000) begin 
+	if (testvectors[vectornum] === 384'bx) begin 
            $display("%d tests completed with %d errors", 
 	            vectornum, errors);
            $stop;

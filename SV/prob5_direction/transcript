@@ -11,19 +11,19 @@
 # //  is prohibited from disclosure under the Trade Secrets Act,
 # //  18 U.S.C. Section 1905.
 # //
-# do grayCode.do
+# do direction.do
 # Model Technology ModelSim SE-64 vlog 2021.3 Compiler 2021.07 Jul 13 2021
-# Start time: 17:00:14 on Sep 03,2025
-# vlog -reportprogress 300 grayCode.sv 
+# Start time: 20:42:34 on Sep 05,2025
+# vlog -reportprogress 300 direction.sv 
 # -- Compiling module testbench
 # -- Compiling module grayCode
 # 
 # Top level modules:
 # 	testbench
-# End time: 17:00:14 on Sep 03,2025, Elapsed time: 0:00:00
+# End time: 20:42:34 on Sep 05,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim SE-64 vopt 2021.3 Compiler 2021.07 Jul 13 2021
-# Start time: 17:00:14 on Sep 03,2025
+# Start time: 20:42:34 on Sep 05,2025
 # vopt -reportprogress 300 "+acc" work.testbench -o workopt 
 # 
 # Top level modules:
@@ -32,19 +32,21 @@
 # Analyzing design...
 # -- Loading module testbench
 # -- Loading module grayCode
-# Incremental compilation check found no design-units have changed.
+# Incremental compilation check found 1 design-unit (out of 2) may be reused.
+# Optimizing 1 design-unit (inlining 0/2 module instances):
+# -- Optimizing module testbench(fast)
 # Optimized design name is workopt
-# End time: 17:00:14 on Sep 03,2025, Elapsed time: 0:00:00
+# End time: 20:42:35 on Sep 05,2025, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # vsim workopt 
-# Start time: 17:00:14 on Sep 03,2025
+# Start time: 20:42:35 on Sep 05,2025
 # Loading sv_std.std
 # Loading work.testbench(fast)
 # Loading work.grayCode(fast)
-#  24 tests completed with   0 errors
-# ** Note: $stop    : grayCode.sv(49)
-#    Time: 255 ns  Iteration: 1  Instance: /testbench
-# Break in Module testbench at grayCode.sv line 49
+#  11 tests completed with   0 errors
+# ** Note: $stop    : direction.sv(49)
+#    Time: 125 ns  Iteration: 1  Instance: /testbench
+# Break in Module testbench at direction.sv line 49
 # .main_pane.wave.interior.cs.body.pw.wf
-# End time: 17:00:58 on Sep 03,2025, Elapsed time: 0:00:44
+# End time: 20:45:18 on Sep 05,2025, Elapsed time: 0:02:43
 # Errors: 0, Warnings: 0

@@ -1,4 +1,4 @@
-# multiplication.do 
+# grayCode.do 
 # 
 
 # compile, optimize, and start the simulation
